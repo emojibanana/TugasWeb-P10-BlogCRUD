@@ -15,7 +15,13 @@ Semua syarat wajib (8/8) sudah diimplementasikan:
 - @csrf semua form + @method PUT/DELETE
 - Route Model Binding + pagination
 
-Fitur bonus (search, soft delete, upload gambar): belum diimplementasikan.
+## Fitur Bonus
+
+Semua fitur bonus sudah diimplementasikan dan berjalan normal:
+
+- **Search**: Pencarian post berdasarkan judul atau isi konten di halaman index.
+- **Soft Delete**: Post yang dihapus tidak hilang permanen dari database (menggunakan `deleted_at`).
+- **Upload Gambar**: Form create/edit mendukung upload gambar opsional (disimpan di `storage/app/public/posts`).
 
 ## Panduan Menjalankan
 

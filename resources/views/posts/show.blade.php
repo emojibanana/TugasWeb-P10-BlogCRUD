@@ -1,6 +1,11 @@
 @extends('layouts.app') 
 @section('content') 
     <article class="prose max-w-none"> 
+        @if ($post->image)
+            <div class="mb-6">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="Gambar Post" class="w-full h-auto object-cover rounded-lg">
+            </div>
+        @endif
         <h2 class="text-2xl font-bold text-slate-900 mb-2">
             {{ $post->title }}
         </h2> 

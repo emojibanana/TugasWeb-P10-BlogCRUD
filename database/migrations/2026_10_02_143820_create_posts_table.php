@@ -14,6 +14,8 @@ return new class extends Migration
             $table->id(); 
             $table->string('title'); // Kolom untuk judul 
             $table->text('body'); // Kolom untuk isi konten 
+            $table->string('image')->nullable(); // Kolom untuk menyimpan nama file gambar (opsional)
+            $table->softDeletes(); // Kolom untuk soft delete (deleted_at)
             $table->timestamps(); // Otomatis membuat created_at &amp; updated_at 
         }); 
     }

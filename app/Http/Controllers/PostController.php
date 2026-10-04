@@ -10,9 +10,16 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->paginate(6);
+        $posts = Post::latest()
+        ->when($request->search, function ($query, $search) {
+            return $query->where('title', 'like', "%{$search}%")
+                  ->orWhere('body', 'like', "%{$search}%");
+        })
+        
+        ->paginate(6)
+        ->withQueryString();
         return view('posts.index', compact('posts'));
     }
 
@@ -32,7 +39,11 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:200',
             'body' => 'required|min:10',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar (opsional)
         ]);
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('posts', 'public');
+        }
 
         Post::create($validated);
         return redirect()->route('posts.index')->
@@ -63,7 +74,12 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:200',
             'body' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi untuk gambar (opsional)
         ]);
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('posts', 'public');
+        }
 
         $post->update($validated);
 

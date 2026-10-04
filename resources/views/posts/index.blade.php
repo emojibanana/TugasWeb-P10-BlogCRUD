@@ -6,7 +6,13 @@
             + Tambah Post Baru
         </a>
     </div>
-
+    <form action="{{ route('posts.index') }}" method="GET" class="mb-6">
+        <div class="flex items-center gap-2">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari post..." class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring focus:ring-indigo-200">
+            <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition shadow-sm">
+                Cari
+            </button>
+        </div>
     <div class="space-y-4">
         @if ($posts->isEmpty())
             <div class="text-center py-10 text-slate-400">
@@ -16,6 +22,11 @@
             @foreach ($posts as $p)
                 <x-card>
                     <x-slot name="header">
+                        @if ($p->image)
+                            <div class="mb-3">
+                                <img src="{{ asset('storage/' . $p->image) }}" alt={{ $p->title }} class="w-full h-48 object-cover rounded-lg">
+                            </div>
+                        @endif
                         <a href="{{ route('posts.show', $p) }}" class="hover:text-indigo-600 transition">
                             {{ $p->title }}
                         </a>

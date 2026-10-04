@@ -2,11 +2,18 @@
 @section('content')
 <div class="max-w-2xl mx-auto py-6 sm:py-12">
     <h2 class="text-2xl font-bold text-slate-900 mb-6">Edit Post</h2>
-    <form method="POST" action="{{ route('posts.update', $post) }}" class="bg-white rounded-xl shadow-sm p-6 space-y-5">
+    <form method="POST" action="{{ route('posts.update', $post) }}" enctype="multipart/form-data" class="bg-white rounded-xl shadow-sm p-6 space-y-5">
         @csrf
         @method('PUT')
         
         <div class="space-y-2">
+            <label for="image" class="block text-slate-700 font-medium text-sm mb-1">Gambar (opsional):</label>
+            <input type="file" name="image" id="image" accept="image/*"
+            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+            @error('image')
+                <small class="text-red-500">{{ $message }}</small>
+            @enderror
+            
             <label for="title" class="block text-slate-700 font-medium text-sm mb-1">Judul:</label>
             <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}"
                 class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
